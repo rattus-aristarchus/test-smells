@@ -10,16 +10,16 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class BadE2EFirstExample {
 
-    // У шага нет описания, не понятно, что он делает
-    // Нет понимания, что страница уже прогрузилась
+    // The step has no description, we don't know what it's doing.
+    // We can't be sure that the page is loaded
     @Step
     public void openAuthorizationPage() {
         open("https://www.saucedemo.com");
     }
 
-    // Элементы не вынесены в поля теста или в пейдж обджекты,
-    // что делает невозможным их переиспользование
-    // Хардкод данных в методе, который мог бы принимать любые данные
+    // Elements haven't been put inside variables or page objects,
+    // which means we can't reuse them.
+    // Data is hard-coded, while it could be accepted from the outside.
     @Step
     public void authorize() {
         $("#user-name").setValue("standard_user");
@@ -27,29 +27,30 @@ public class BadE2EFirstExample {
         $("#login-button").click();
     }
 
-    // Класс - не самый надежный селектор, лучше использовать айди или дата айди
+    // Selectors are based on classes and not IDs
     @Step
     public void checkUserAuthorized() {
         $(".app_logo").shouldBe(Condition.visible);
     }
 
-    // Ненадежная проверка, так как если страница прогружается медленно,
-    // то она может пройти, успев найти логотип на текущей же страницы
+    // Unsafe check: if the page takes a while to load,
+    // the check will pass, because the logo is present
+    // on the previous page
     @Step
     public void checkUserNotAuthorized() {
         $(".login_logo").shouldBe(Condition.visible);
     }
 
-    // Тест ничего не проверяет, хотя и не падает
+    // The test doesn't test anything and never fails
     @Test
     public void shouldAuthorizeUser() {
         openAuthorizationPage();
         authorize();
     }
 
-    // 1. Не используются фикстуры для выноса шага открытия страницы
-    // 2. Не переиспользуется метод authorize, хотя можно доработать
-    // 3. Данные генерируются в другом классе, но на данный момент это избыточно
+    // 1. Opening the main page isn't put into a fixture
+    // 2. The 'authorize()' method isn't reused
+    // 3. Data is generated in a separate class, which currently is overkill
     @Test
     public void shouldNotAuthorizeUserWithInvalidPassword() {
         Faker faker = new Faker();
@@ -64,8 +65,9 @@ public class BadE2EFirstExample {
         checkUserNotAuthorized();
     }
 
-    // Экземпляр класса Faker создается в каждом тесте, хотя достаточно было бы одного
-    // Тесты практически одинаковые, было бы лучше сделать один параметризированный
+    // An instance of the Faker class is created in each test,
+    // although just one would have sufficed.
+    // Tests are pretty much identical; they should be parameterized.
     @Test
     public void shouldNotAuthorizeUserWithInvalidUsername() {
         Faker faker = new Faker();
@@ -80,8 +82,9 @@ public class BadE2EFirstExample {
         checkUserNotAuthorized();
     }
 
-    // Несколько проверок в одном тесте. Тесты взаимосвязаны и от этого могут флакать
-    // Проверки повторяются
+    // A single test has multiple checks. The tests depend on each other,
+    // which may cause flakiness.
+    // The checks are identical.
     @Test
     public void shouldNotAuthorizeUserWithEmptyAndBlankInputs() {
         openAuthorizationPage();

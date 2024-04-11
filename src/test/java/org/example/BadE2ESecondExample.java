@@ -23,14 +23,15 @@ public class BadE2ESecondExample {
         openAuthorizationPage();
     }
 
-    // Base url стоит использовать вместо того, чтобы описывать полный адрес страницы
+    // Instead of writing the full address, it's better to use the baseUrl property
     @Step("Open the login page")
     public void openAuthorizationPage() {
         open("https://www.saucedemo.com");
         inputUsername.shouldBe(Condition.visible);
     }
 
-    // жуткая условная логика, даже если вынести заполнение полей в метод, проще не станет
+    // A maze of conditional logic. Even if we hide filling in the credentials, this
+    // won't look much better.
     @Step
     public void authorize(Boolean username, Boolean password) {
         String trueUsername = "standard_user";
@@ -58,8 +59,7 @@ public class BadE2ESecondExample {
         $("[data-test='secondary-header']").shouldBe(Condition.visible);
     }
 
-    // Проверок, чтобы убедиться, что пользователь находится на той же странице, слишком много
-    // При этом ни одна не решает проблему ненадежности
+    // Too many checks - and none of them are definitive
     @Step
     public void checkUserNotAuthorized() {
         $(".login_logo").shouldBe(Condition.visible);
@@ -68,8 +68,9 @@ public class BadE2ESecondExample {
         inputPassword.shouldBe(Condition.visible);
     }
 
-    // Не понятно, что делает метод авторизации с true, придется его смотреть отдельно
-    // Нет возможности быстро узнать, с какими данными проходит тест
+    // It's not clear what "true" and "false" mean here, you
+    // have to look up the method.
+    // It' not clear what data the test is using.
     @Test
     public void shouldAuthorizeUser() {
         authorize(true, true);
@@ -77,7 +78,7 @@ public class BadE2ESecondExample {
         checkUserAuthorized();
     }
 
-    // Одинаковые тесты с разными параметрами в функциях
+    // This is the exact same test with different parameters.
     @Test
     public void shouldNotAuthorizeUserWithInvalidPassword() {
         authorize(true, false);
@@ -85,6 +86,7 @@ public class BadE2ESecondExample {
         checkUserNotAuthorized();
     }
 
+    // Same here.
     @Test
     public void shouldNotAuthorizeUserWithInvalidUsername() {
         authorize(false, true);
@@ -92,8 +94,7 @@ public class BadE2ESecondExample {
         checkUserNotAuthorized();
     }
 
-    // Несколько проверок в одном тесте. Тесты взаимосвязаны и от этого могут флакать
-    // Не переиспользуется метод авторизации
+    // The authorization method is not used.
     @Test
     public void shouldNotAuthorizeUserWithBlankInputs() {
         inputUsername.setValue(" ");

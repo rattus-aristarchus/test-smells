@@ -10,19 +10,19 @@ public class UnitTests {
         return "Hello " + name + "!";
     }
 
-    //1. Название ни о чем не говорит, сложно будет найти метод поиском
+    // 1. The name isn't telling us anything, you won't be able to do a search for the method
     @Test
     void test() {
 
     }
 
-    //2. Нет разделения между определением переменных, действием и проверкой
+    // 2. Arrange, act and assert are not separated
     @Test
     void shouldReturnHelloPhrase() {
         assert(hello("John")).matches("Hello John!");
     }
 
-    //3. Нет переиспользования информации (имени) + непонятные названия переменных
+    // 3. Data (name) is hard-coded and not reused; variable names are uninformative
     @Test
     void shouldReturnHelloPhrase1() {
         String a = "John";
@@ -33,7 +33,7 @@ public class UnitTests {
                 .matches("Hello John!");
     }
 
-    //4. Эффект пестицида
+    // 4. Pesticide effect
     @Test
     void shouldReturnHelloPhrase2() {
         String name = "John";
@@ -45,9 +45,9 @@ public class UnitTests {
     }
 
 
-    //5. Неинформативная ошибка ассерта
+    // 5. Vague error message:
     //  java.lang.AssertionError
-    //  at io.qameta.allure.IssuesRestTest.shouldReturnHelloPhrase(IssuesRestTest.java:92)
+    //  at io.qameta.allure.IssuesRestTest.shouldReturnHelloPhrase(UnitTests.java:58)
     @Test
     void shouldReturnHelloPhrase3() {
         Faker faker = new Faker();
@@ -59,6 +59,7 @@ public class UnitTests {
                 .equals("Hello " + name + "!");
     }
 
+    // 6. The new error message looks like this:
     //expected: <Hello Mauro!> but was: <Hello Mauro>
     //    Expected :Hello Mauro!
     //    Actual   :Hello Mauro
