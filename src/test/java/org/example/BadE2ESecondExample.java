@@ -40,18 +40,28 @@ public class BadE2ESecondExample {
         if (username && password) {
             inputUsername.setValue(trueUsername);
             inputPassword.setValue(truePassword);
+            buttonLogin.click();
+
+            checkUserAuthorized();
         } else if (username) {
             inputUsername.setValue(trueUsername);
             inputPassword.setValue(faker.internet().password());
+            buttonLogin.click();
+
+            checkUserNotAuthorized();
         } else if (password) {
             inputUsername.setValue(faker.name().username());
             inputPassword.setValue(truePassword);
+            buttonLogin.click();
+
+            checkUserNotAuthorized();
         } else {
             inputUsername.setValue(faker.name().username());
             inputPassword.setValue(faker.internet().password());
-        }
+            buttonLogin.click();
 
-        buttonLogin.click();
+            checkUserNotAuthorized();
+        }
     }
 
     @Step

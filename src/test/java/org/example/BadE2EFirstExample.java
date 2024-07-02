@@ -41,7 +41,7 @@ public class BadE2EFirstExample {
         $(".login_logo").shouldBe(Condition.visible);
     }
 
-    // The test doesn't test anything and never fails
+    // The test doesn't test anything
     @Test
     public void shouldAuthorizeUser() {
         openAuthorizationPage();

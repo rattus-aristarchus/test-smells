@@ -16,13 +16,13 @@ public class UnitTests {
 
     }
 
-    // 2. Arrange, act and assert are not separated
+    // 2. Arrange, act, and assert are not separated
     @Test
     void shouldReturnHelloPhrase() {
         assert(hello("John")).matches("Hello John!");
     }
 
-    // 3. Data (name) is hard-coded and not reused; variable names are uninformative
+    // 3. Data (the name) is hard-coded and not reused; variable names are uninformative
     @Test
     void shouldReturnHelloPhrase1() {
         String a = "John";

@@ -7,6 +7,7 @@ import com.github.javafaker.Faker;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -60,6 +61,7 @@ public class GoodE2E {
         $("#login_button_container").shouldBe(Condition.visible);
     }
 
+    @Tag("happy_path")
     @Test
     public void shouldAuthorizeUserWithValidCredentials() {
         authorize(trueUsername, truePassword);
