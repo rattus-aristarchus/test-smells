@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.github.javafaker.Faker;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -29,9 +30,13 @@ public class GoodE2E {
     static String trueUsername = "standard_user";
     static String truePassword = "secret_sauce";
 
+    @BeforeAll
+    public static void setUpAll() {
+        Configuration.baseUrl = "https://www.saucedemo.com";
+    }
+
     @BeforeEach
     public void setUp() {
-        Configuration.baseUrl = "https://www.saucedemo.com";
         openAuthorizationPage();
     }
 
